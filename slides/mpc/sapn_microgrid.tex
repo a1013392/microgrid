@@ -181,7 +181,7 @@
 		
 		\item  Perform virtual trials (i.e., equation-based simulations using real-world data) to examine:%and Monte Carlo simulations
 		\begin{itemize}
-			\item  Objective function and process constraints that minimise the cost of power imported from the grid while reducing maximum operational demand
+			\item  Objective function and process constraints that minimise the cost of power imported from the grid while reducing operational maximum demand
 			\item  Effect of electricity tariff structure on the operational load profile
 			\item  Savings achieved by optimising at the microgrid level rather than the individual household level
 			%\item  Rating/ capacity levels of DER at which optimising at the microgrid level becomes moot
@@ -202,7 +202,7 @@
 		& $N$ & number of time intervals in the simulation horizon\\
 		& $\delta$ & conversion factor from power (kW) to energy (kWh)\\
 		& $\eta$ & one-way battery charge/discharge efficiency\\
-		& $c(t)$ & vector of weighting coefficients (e.g., tariffs) for time interval~$t$\\
+		& $\boldsymbol{c}(t)$ & vector of weighting coefficients (e.g., tariffs) for time interval~$t$\\
 		& $p_{i}(t)$ & power imported from the grid by household~$i$ during time interval~$t$\footnote{
 $p_{i}(t) < 0$ implies power exported to the grid	
 }\\
@@ -273,7 +273,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 	\begin{itemize}
 		\item  Performance index is weighted to reflect cost of power imported from the grid
 		
-		\item  Let $\Lambda = \operatorname{diag}\big(c(t\!+\!1)\big)$ be a positive semi-definite diagonal weighting matrix reflecting the electricity tariff structure
+		\item  Let $\Lambda = \operatorname{diag}\big(\boldsymbol{c}(t\!+\!1)\big)$ be a positive semi-definite diagonal weighting matrix reflecting the electricity tariff structure
 		
 		\item  Define the single period performance index as
 			\begin{IEEEeqnarray*}{rCl}
@@ -327,8 +327,8 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		
 		\item  Let 
 		\begin{IEEEeqnarray*}{rCl}
-			\vv{\boldsymbol{y}}_{i,t+1} & = & \begin{bmatrix*}[c] \boldsymbol{y}_{i}(t\!+\!1) &\boldsymbol{y}_{i}(t\!+\!2) & \!\ldots\! & \boldsymbol{y}_{i}(t\!+\!n) \end{bmatrix*}^{T},\\
-			\vv{\boldsymbol{u}}_{i,t} & = & \begin{bmatrix*}[c] \boldsymbol{u}_{i}(t) &\boldsymbol{u}_{i}(t\!+\!1) & \!\ldots\! & \boldsymbol{u}_{i}(t\!+\!n\!-\!1) \end{bmatrix*}^{T}
+			\vv{\boldsymbol{y}}_{i,t+1} & = & \begin{bmatrix*}[c] \boldsymbol{y}_{i}(t\!+\!1)^{T} &\boldsymbol{y}_{i}(t\!+\!2)^{T} & \!\ldots\! & \boldsymbol{y}_{i}(t\!+\!n)^{T} \end{bmatrix*}^{T},\\
+			\vv{\boldsymbol{u}}_{i,t} & = & \begin{bmatrix*}[c] \boldsymbol{u}_{i}(t)^{T} &\boldsymbol{u}_{i}(t\!+\!1)^{T} & \!\ldots\! & \boldsymbol{u}_{i}(t\!+\!n\!-\!1)^{T} \end{bmatrix*}^{T}
 		\end{IEEEeqnarray*}
 		
 		\item  Recursively applying the single-period model over the $n$-period horizon yields
@@ -368,7 +368,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		\begin{IEEEeqnarray*}{rCl}
 				f & = & \left\lVert\sqrts{\Lambda}\big(K\boldsymbol{x}_{i}(t) + L\vv{\boldsymbol{u}}_{i,t}\big)\right\rVert_{2}^{2},
 		\end{IEEEeqnarray*}
-		where $\Lambda = \operatorname{diag}\big(c(t\!+\!1), c(t\!+\!2), \ldots, c(t\!+\!n) \big)$
+		where $\Lambda = \operatorname{diag}\big([\boldsymbol{c}(t\!+\!1)^{T}, \boldsymbol{c}(t\!+\!2)^{T}, \ldots, \boldsymbol{c}(t\!+\!n)^{T}]\big)$
 		
 		\item  Expanding the performance index, dropping the constant terms and imposing process constraints, the quadratic program is written in standard form
 		\begin{IEEEeqnarray*}{rCl}
@@ -478,7 +478,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		\item  Evaluate optimisation algorithms, control techniques and simulation parameters by their effect on:
 		\begin{itemize}
 			\item  Net cost of electricity for households
-			\item  Peak operational demand (i.e., network upgrades)
+			\item  Operational peak demand (i.e., network upgrades)
 			\item  Battery charge/discharge cycles (i.e., life of the battery)
 			\item  Simulation runtime
 		\end{itemize}
@@ -508,7 +508,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 %			\item  Battery energy storage reduces net cost of electricity by 43\%
 %			\item  Optimisation at the microgrid level reduces net cost of electricity by 25\%
 %			\item  Net cost of electricity is marginally higher for multi-period control horizon with a corresponding increase in the number of charge/discharge cycles
-%			\item  Peak operational demand is much higher for multi-period control horizon
+%			\item  Operational peak demand is much higher for multi-period control horizon
 %		\end{itemize}
 %		
 %		\item  MIQP:
@@ -516,12 +516,12 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 %			\item  Battery energy storage reduces net cost of electricity by 43\%
 %			\item  Optimisation at the microgrid level reduces net cost of electricity by 25\%
 %			\item  Net cost of electricity is not significantly different between single- and multi-period control horizons
-%			\item  Peak operational demand is markedly lower for multi-period control horizon, while single-period control horizon results in fewer charge/discharge cycles
+%			\item  Operational peak demand is markedly lower for multi-period control horizon, while single-period control horizon results in fewer charge/discharge cycles
 %		\end{itemize}
 %		
 %		\item  MILP solves faster resulting in shorter simulation runtime than MIQP
 %		
-%		\item  MIQP has much lower peak operational demand than MILP\footnote{\tiny QP penalises large power imports from, and exports to, the grid during a given time interval disproportionately more heavily than small imports/ exports.  LP penalises large power imports from the grid during a given time interval proportionately equally as small imports.  Therefore, QP tends to charge the battery in anticipation of supplying excess load (i.e., load in excess of rooftop PV generation) during peak times by importing relatively small quantities of power from the grid over multiple time intervals.  As a consequence maximum operational demand tends to be much lower under QP than LP}
+%		\item  MIQP has much lower operational peak demand than MILP\footnote{\tiny QP penalises large power imports from, and exports to, the grid during a given time interval disproportionately more heavily than small imports/ exports.  LP penalises large power imports from the grid during a given time interval proportionately equally as small imports.  Therefore, QP tends to charge the battery in anticipation of supplying excess load (i.e., load in excess of rooftop PV generation) during peak times by importing relatively small quantities of power from the grid over multiple time intervals.  As a consequence operational maximum demand tends to be much lower under QP than LP}
 %	
 %	\end{itemize}
 %
@@ -540,7 +540,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 			{\scriptsize
 			\begin{tabular}{l r r r}
 				\toprule
-				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Peak operational}	& \multicolumn{1}{c}{Charge/discharge}	\\
+				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Operational peak}	& \multicolumn{1}{c}{Charge/discharge}	\\
 				& \multicolumn{1}{c}{	electricity (\$)} 	& \multicolumn{1}{c}{demand (kW)}		&\multicolumn{1}{c}{cycles}	\\
 				\midrule
 				MIQP, household, single-period, no BESS	& 28,086	& 242.8	& N/A	\\
@@ -560,7 +560,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 			{\scriptsize
 			\begin{tabular}{l r r r}
 				\toprule
-				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Peak operational}	& \multicolumn{1}{c}{Charge/discharge}	\\
+				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Operational peak}	& \multicolumn{1}{c}{Charge/discharge}	\\
 				& \multicolumn{1}{c}{	electricity (\$)} 	& \multicolumn{1}{c}{demand (kW)}		&\multicolumn{1}{c}{cycles}	\\
 				\midrule
 				MIQP, household, single-period		& 16,017	& 183.8	& 74.3	\\
@@ -584,13 +584,13 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 
 	\begin{enumerate}
 		\setcounter{enumi}{\value{enumcount}}		
-		\item  Peak operational demand is markedly lower for a multi-period control horizon employing MIQP relative to a single-period control horizon
+		\item  Operational peak demand is markedly lower for a multi-period control horizon employing MIQP relative to a single-period control horizon
 			\begin{table}[!h]
 			\centering
 			{\scriptsize
 			\begin{tabular}{l r r r}
 				\toprule
-				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Peak operational}	& \multicolumn{1}{c}{Charge/discharge}	\\
+				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Operational peak}	& \multicolumn{1}{c}{Charge/discharge}	\\
 				& \multicolumn{1}{c}{	electricity (\$)} 	& \multicolumn{1}{c}{demand (kW)}		&\multicolumn{1}{c}{cycles}	\\
 				\midrule
 				MIQP, microgrid, single-period		& 11,956	& 242.8	& 82.1	\\
@@ -608,7 +608,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 			{\scriptsize
 			\begin{tabular}{l r r r}
 				\toprule
-				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Peak operational}	& \multicolumn{1}{c}{Charge/discharge}	\\
+				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Operational peak}	& \multicolumn{1}{c}{Charge/discharge}	\\
 				& \multicolumn{1}{c}{	electricity (\$)} 	& \multicolumn{1}{c}{demand (kW)}		&\multicolumn{1}{c}{cycles}	\\
 				\midrule
 				MIQP, microgrid, single-period		& 11,956	& 242.8	& 82.1	\\
@@ -632,14 +632,14 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 
 	\begin{enumerate}
 		\setcounter{enumi}{\value{enumcount}}
-		\item  Peak operational demand for a multi-period control horizon employing MIQP is a fraction of that employing MILP\footnote{\scriptsize QP penalises large power imports from the grid during a given time interval disproportionately more heavily than small imports, while LP penalises large power imports from the grid during a given time interval proportionately equally as small imports
+		\item  Operational peak demand for a multi-period control horizon employing MIQP is a fraction of that employing MILP\footnote{\scriptsize QP penalises large power imports from the grid during a given time interval disproportionately more heavily than small imports, while LP penalises large power imports from the grid during a given time interval proportionately equally as small imports
 		}
 			\begin{table}
 			\centering
 			{\scriptsize
 			\begin{tabular}{l r r r}
 				\toprule
-				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Peak operational}	& \multicolumn{1}{c}{Charge/discharge}	\\
+				& \multicolumn{1}{c}{Net cost of}	& \multicolumn{1}{c}{Operational peak}	& \multicolumn{1}{c}{Charge/discharge}	\\
 				& \multicolumn{1}{c}{	electricity (\$)} 	& \multicolumn{1}{c}{demand (kW)}		&\multicolumn{1}{c}{cycles}	\\
 				\midrule
 				MILP, microgrid, multi-period		& 12,748	& 434.4	& 83.6	\\
@@ -674,7 +674,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		Rooftop PV generation 		& 152,310&kWh	\\
 		Energy charging battery		& 45,627&kWh		\\
 		Energy discharge from battery	& 42,064&kWh		\\
-		Peak operational demand		& 217.7&kW		\\
+		Operational peak demand		& 217.7&kW		\\
 		Energy imported from the grid	& 79,020&kWh		\\
 		Energy exported to the grid	& 49,945&kWh		\\
 		Net cost of electricity			& \$19,316&		\\
