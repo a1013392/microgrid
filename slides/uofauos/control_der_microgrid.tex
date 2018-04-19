@@ -172,8 +172,8 @@
 		\item  SA is a world-leading jurisdiction for penetration of variable renewable energy generation and storage
 		\begin{itemize}
 			\item  In fiscal year 2016--17, 48.4\% of the electricity generated in SA came from variable renewable energy sources --- 39.2\% wind and 9.2\% rooftop PV
-			\item  The largest battery in the world (100MW/129MWh) is coupled to the Hornsdale wind farm in the state's mid-north
-			\item  SA government has announced a policy to create the world's largest virtual power plant --- 50,000 households equipped with solar panels and battery
+			\item  Largest battery in the world (100MW/129MWh) is coupled to the Hornsdale wind farm in the state's mid-north
+			\item  SA government has announced a policy to create the world's largest virtual power plant --- 50,000 households equipped with solar panels and a battery
 		\end{itemize}
 		
 		\item  SA has the highest ratio of rooftop PV generation to operational consumption in the National Electricity Market, and likely for any major grid in the world
@@ -330,7 +330,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 			\vv{\boldsymbol{u}}_{i,t} & = & \begin{bmatrix*}[c] \boldsymbol{u}_{i}(t)^{T} &\boldsymbol{u}_{i}(t\!+\!1)^{T} & \!\ldots\! & \boldsymbol{u}_{i}(t\!+\!n\!-\!1)^{T} \end{bmatrix*}^{T}
 		\end{IEEEeqnarray*}
 		
-		\item  Recursively applying the single-period model 
+		\item  Recursively applying the single-period state-space model 
 		\begin{equation*}
 			\boldsymbol{y}_{i}(t\!+\!1) = A\boldsymbol{x}_{i}(t) + B\boldsymbol{u}_{i}(t)
 		\end{equation*}
@@ -376,11 +376,11 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		
 		\item  Optimisation of performance index is subject to process constraints:
 		\begin{itemize}
-			\item  Rooftop PV generation and load are set to solar power and demand forecasts %--- virtual trials assume perfect foresight
-			\item  One-way battery charge/discharge efficiency%, $\eta = \sqrts{0.88}$
-			\item  Charge/discharge rates cannot exceed rated power (continuous) of the battery
+			\item  Rooftop PV generation and load are set to solar power and demand forecasts%--- virtual trials assume perfect foresight
+			%\item  One-way battery charge/discharge efficiency%, $\eta = \sqrts{0.88}$
+			\item  Upper and lower bounds on SOC of the battery%restrict battery to partial discharging, which prolongs battery life
 			\item  Energy capacity accounts for its decay over the lifetime of the battery
-			\item  Upper and lower bounds on SOC restrict battery to partial discharging, which prolongs battery life
+			\item  Charge/discharge rates cannot exceed rated power (continuous) of the battery
 			\item  Linear complementarity of battery charge and discharge control signals
 		\end{itemize}
 		
@@ -391,7 +391,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 %%=========================================================================================%%
 \begin{frame}
 	\frametitle{MPC controller}
-	\framesubtitle{Multi-period mixed integer quadratic programming}
+	\framesubtitle{Mixed integer quadratic programming}
 
 	\begin{itemize}
 		\item  Expanding the performance index, dropping the constant terms and imposing process constraints, the quadratic program is written in standard form
@@ -405,7 +405,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		\end{IEEEeqnarray*}
 		for $i = 1, \ldots, m$ and $t=1, \ldots, N$
 		
-		\item  Introducing binary variable to ensure linear complementarity transforms the optimisation into a mixed linear quadratic program (MIQP)
+		\item  Introducing binary variable to ensure linear complementarity of battery charge and discharge control signals transforms the optimisation problem into a mixed integer quadratic program (MIQP)
 	\end{itemize}
 
 \end{frame}
