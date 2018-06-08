@@ -1,10 +1,10 @@
-%\documentclass[presentation, smaller, xcolor=table]{beamer}
-\documentclass[handout, smaller, xcolor=table]{beamer}			% Suppresses pauses
+\documentclass[presentation, smaller, xcolor=table]{beamer}
+%\documentclass[handout, smaller, xcolor=table]{beamer}			% Suppresses pauses
 %\mode<handout>{\setbeamercolor{background canvas}{bg=black!5}}	% very light gray background
 
 \usepackage{pgfpages}
 	%\pgfpagesuselayout{resize to}[a4paper, border shrink=5mm, landscape]
-	\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]		%[, portrait]
+	%\pgfpagesuselayout{2 on 1}[a4paper, border shrink=5mm]		%[, portrait]
 	%\pgfpagesuselayout{4 on 1}[a4paper, border shrink=5mm, landscape]
 	
 %\setbeameroption{show slides}
@@ -237,7 +237,7 @@
 		\begin{itemize}
 			\item  Objective function and process constraints that minimise the cost of power imported from the grid while reducing operational maximum demand
 			\item  Effect of electricity tariff structure on the operational load profile
-			\item  Savings achieved by optimising at the microgrid level rather than the individual household level
+			\item  Savings achieved by optimising at the microgrid level relative to the individual household level
 		\end{itemize}
 	
 	\end{itemize}
@@ -501,7 +501,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 	\begin{itemize}
 		\item  MPC controller determines battery charge/discharge control signals that minimise cost of power imported from the grid subject to process constraints
 		
-		\item  Evaluate optimisation algorithms, control techniques and simulation parameters by their effect on:
+		\item  Evaluate the effect of optimisation algorithms, tariff structures, prediction/ control horizons and other simulation parameters on:
 		\begin{itemize}
 			\item  Net cost of electricity for households
 			\item  Operational peak demand (i.e., network upgrades)
@@ -580,7 +580,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 
 	\begin{enumerate}
 		\setcounter{enumi}{\value{enumcount}}		
-		\item  Peak operational demand is markedly lower for a multi-period control horizon employing MIQP relative to a single-period control horizon
+		\item  Operational peak demand is markedly lower for a multi-period control horizon employing MIQP relative to a single-period control horizon
 			\begin{table}[!h]
 			\centering
 			{\scriptsize
@@ -689,7 +689,7 @@ Control signals set to forecasts produced at time~$t$ are valid for time interva
 		\begin{itemize}
 			\item  Tilt Renewables has announced that it will connect a solar farm (44MW) and utility-scale battery (21MW/26MWh) to its Snowtown wind farm (369MW) in the mid-north of South Australia
 		
-			\item  Collaboration with Tilt Renewables is applying optimisation and control techniques to firm-up wind power dispatch using battery energy storage
+			\item  Collaboration with Tilt Renewables is applying model predictive control to firm wind power dispatch using battery energy storage
 			
 			\item  Conjecture that if wind farms were to dependably supply power scheduled during pre-dispatch, then wholesale electricity prices would be less volatile and, on average, lower 
 	
